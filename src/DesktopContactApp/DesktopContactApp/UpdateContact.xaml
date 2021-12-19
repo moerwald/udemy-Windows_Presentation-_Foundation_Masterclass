@@ -1,0 +1,38 @@
+﻿<Window x:Class="DesktopContactApp.UpdateContact"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopContactApp"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Title="UpdateContact" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="TextboxStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBox x:Name="NameTextBox" Style="{StaticResource TextboxStyle}"></TextBox>
+            <TextBox x:Name="EmailTextBox" Style="{StaticResource TextboxStyle}"></TextBox>
+            <TextBox x:Name="PhoneTextBox" Style="{StaticResource TextboxStyle}"></TextBox>
+            <Button Content="Update" 
+                    Style="{StaticResource ButtonStyle}" 
+                    x:Name="UpdateButton"
+                    Click="UpdateButton_Click"
+                    />
+            <Button Content="Delete" 
+                    x:Name="DeleteButton"
+                    Click="DeleteButton_Click"
+                    Style="{StaticResource ButtonStyle}" 
+                    Background="Red" 
+                    Foreground="White" />
+        </StackPanel>
+        
+    </Grid>
+</Window>
