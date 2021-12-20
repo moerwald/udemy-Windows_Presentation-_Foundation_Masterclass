@@ -16,5 +16,7 @@ namespace EvernoteClone.Model
         public int UserId { get; set; }
 
         public string Name { get; set; }
+
+        public override string ToString() => Name;
     }
 }

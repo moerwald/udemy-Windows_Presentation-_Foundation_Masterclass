@@ -8,35 +8,35 @@ using System.Threading.Tasks;
 
 namespace EvernoteClone.ViewModels.Helpers
 {
-    public class DatabaseHelper
+    public static class DatabaseHelper
     {
         private static readonly string _dbFile = Path.Combine(Environment.CurrentDirectory, "EvernoteClone.sqlite");
         private static readonly SQLiteConnectionString options = new(_dbFile, false);
 
 
 
-        public bool Insert<T>(T item)
+        public static bool Insert<T>(T item)
         {
             var rowsAdded = 0;
-            CallActionInDbContext<T>(c => rowsAdded = c.Insert(item) );
+            CallActionInDbContext<T>(c => rowsAdded = c.Insert(item));
             return rowsAdded > 0;
         }
 
-        public bool Update<T>(T item)
+        public static bool Update<T>(T item)
         {
             var rowsUpdated = 0;
-            CallActionInDbContext<T>(c => rowsUpdated = c.Update(item) );
+            CallActionInDbContext<T>(c => rowsUpdated = c.Update(item));
             return rowsUpdated > 0;
         }
 
-        public bool Delete<T>(T item)
+        public static bool Delete<T>(T item)
         {
             var rowsDeleted = 0;
-            CallActionInDbContext<T>(c => rowsDeleted = c.Delete(item) );
+            CallActionInDbContext<T>(c => rowsDeleted = c.Delete(item));
             return rowsDeleted > 0;
         }
 
-        public List<T> Read<T>() where T : new()
+        public static List<T> Read<T>() where T : new()
         {
             List<T> items = new();
             CallActionInDbContext<T>(c => items = c.Table<T>().ToList());
