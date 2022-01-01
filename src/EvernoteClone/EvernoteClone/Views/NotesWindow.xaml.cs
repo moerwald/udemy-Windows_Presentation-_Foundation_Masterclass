@@ -27,13 +27,14 @@ namespace EvernoteClone.Views
         public NotesWindow()
         {
 
-            InitSpeechRecognizer();
             InitializeComponent();
+            InitSpeechRecognizer();
 
             // locals
             void InitSpeechRecognizer()
             {
                 var availableRecognizers = SpeechRecognitionEngine.InstalledRecognizers().ToList();
+                btnSpeechRecognition.IsEnabled = false;
                 if (availableRecognizers.Any())
                 {
                     var cc = System.Globalization.CultureInfo.GetCultureInfo("en-US");
@@ -50,6 +51,7 @@ namespace EvernoteClone.Views
                         gb.AppendDictation();
                         _recognizer.LoadGrammar(new Grammar(gb));
                         _recognizer.SetInputToDefaultAudioDevice();
+                        btnSpeechRecognition.IsEnabled = true;
                     }
                 }
             }
@@ -92,8 +94,10 @@ namespace EvernoteClone.Views
 
         private void tbRichtTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            var fw = (FontWeight)tbRichtTextBox.Selection.GetPropertyValue(TextElement.FontWeightProperty);
-            btnBold.IsChecked = fw == FontWeights.Bold;
+            if (tbRichtTextBox.Selection.GetPropertyValue(Inline.FontWeightProperty) is FontWeight fw)
+            {
+                btnBold.IsChecked = fw == FontWeights.Bold;
+            }
         }
     }
 }
