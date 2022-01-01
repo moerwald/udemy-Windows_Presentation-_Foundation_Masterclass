@@ -57,11 +57,15 @@
 
         <ToolBar DockPanel.Dock="Top">
             <Button x:Name="btnSpeechRecognition" Click="btnSpeechRecognition_Click">Speech</Button>
-            <Button FontWeight="Bold" x:Name="btnBold" Click="btnBold_Click">B</Button>
+            <ToggleButton x:Name="btnBold" Click="btnBold_Click">
+                <TextBlock FontWeight="Bold"> B</TextBlock>
+            </ToggleButton>
         </ToolBar>
 
         <Grid>
-            <RichTextBox x:Name="tbRichtTextBox" TextChanged="tbRichtTextBox_TextChanged" />
+            <RichTextBox x:Name="tbRichtTextBox" 
+                         TextChanged="tbRichtTextBox_TextChanged" 
+                         SelectionChanged="tbRichtTextBox_SelectionChanged" />
         </Grid>
 
     </DockPanel>

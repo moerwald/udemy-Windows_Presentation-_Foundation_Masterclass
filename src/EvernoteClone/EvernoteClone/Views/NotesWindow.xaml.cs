@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Speech.Recognition;
+using System.Windows.Controls.Primitives;
 
 namespace EvernoteClone.Views
 {
@@ -25,20 +26,33 @@ namespace EvernoteClone.Views
 
         public NotesWindow()
         {
-            var x = SpeechRecognitionEngine.InstalledRecognizers().ToList();
-            var c = SpeechRecognitionEngine.InstalledRecognizers().Where(r => r.Culture == System.Threading.Thread.CurrentThread.CurrentCulture).FirstOrDefault();
-            _recognizer = new SpeechRecognitionEngine(c);
-            _recognizer.SpeechRecognized += (s, e) =>
-            {
-                tbRichtTextBox.Document.Blocks.Add(new Paragraph(new Run(e.Result.Text)));
-            };
 
-            GrammarBuilder gb = new();
-            gb.AppendDictation();
-            _recognizer.LoadGrammar(new Grammar(gb));
-            _recognizer.SetInputToDefaultAudioDevice();
-
+            InitSpeechRecognizer();
             InitializeComponent();
+
+            // locals
+            void InitSpeechRecognizer()
+            {
+                var availableRecognizers = SpeechRecognitionEngine.InstalledRecognizers().ToList();
+                if (availableRecognizers.Any())
+                {
+                    var cc = System.Globalization.CultureInfo.GetCultureInfo("en-US");
+                    var installedRecognizer = SpeechRecognitionEngine.InstalledRecognizers().Where(r => r.Culture.IetfLanguageTag == cc.IetfLanguageTag).FirstOrDefault();
+                    if (installedRecognizer is not null)
+                    {
+                        _recognizer = new SpeechRecognitionEngine(installedRecognizer);
+                        _recognizer.SpeechRecognized += (s, e) =>
+                        {
+                            tbRichtTextBox.Document.Blocks.Add(new Paragraph(new Run(e.Result.Text)));
+                        };
+
+                        GrammarBuilder gb = new();
+                        gb.AppendDictation();
+                        _recognizer.LoadGrammar(new Grammar(gb));
+                        _recognizer.SetInputToDefaultAudioDevice();
+                    }
+                }
+            }
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -54,21 +68,32 @@ namespace EvernoteClone.Views
 
         private void btnBold_Click(object sender, RoutedEventArgs e)
         {
-            tbRichtTextBox.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+            if (sender is not ToggleButton btnBold)
+                return;
+
+            tbRichtTextBox.Selection.ApplyPropertyValue(
+                TextElement.FontWeightProperty,
+                btnBold.IsChecked ?? false ? FontWeights.Bold : FontWeights.Normal);
         }
 
         private void btnSpeechRecognition_Click(object sender, RoutedEventArgs e)
         {
             if (!_isRecognizing)
             {
-                _recognizer.RecognizeAsync(RecognizeMode.Multiple);
+                _recognizer?.RecognizeAsync(RecognizeMode.Multiple);
                 _isRecognizing = true;
             }
             else
             {
-                _recognizer.RecognizeAsyncStop();
+                _recognizer?.RecognizeAsyncStop();
                 _isRecognizing = false;
             }
+        }
+
+        private void tbRichtTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var fw = (FontWeight)tbRichtTextBox.Selection.GetPropertyValue(TextElement.FontWeightProperty);
+            btnBold.IsChecked = fw == FontWeights.Bold;
         }
     }
 }
