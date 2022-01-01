@@ -43,9 +43,9 @@ namespace EvernoteClone.ViewModels
                           .ForEach(Notes.Add);
         }
 
-        private Notebook _selectedNotebook;
-
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        private Notebook _selectedNotebook;
 
         public Notebook SelectedNotebook
         {
@@ -57,6 +57,29 @@ namespace EvernoteClone.ViewModels
                 OnPropertyChanged(nameof(SelectedNotebook));
             }
         }
+
+
+        private string _statusBarMessage;
+
+        public string StatusBarMessage
+        {
+            get { return _statusBarMessage; } 
+            set 
+            { 
+                _statusBarMessage = value; 
+                OnPropertyChanged(nameof(StatusBarMessage));
+            }
+        }
+
+        private string _richtTextBoxText;
+
+        public string RichTextBoxText
+        {
+            get { return _richtTextBoxText; }
+            set { _richtTextBoxText = value; }
+        }
+
+
 
         public ObservableCollection<Notebook> Notebooks { get; init; }
         public ObservableCollection<Note> Notes { get; init; }

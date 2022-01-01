@@ -28,23 +28,40 @@
                           Click="MenuItem_Click"/>
             </MenuItem>
         </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock x:Name="tbStatusBar"/>
+        </StatusBar>
 
         <ListView Width="140"
                   DockPanel.Dock="Left"
                   ItemsSource="{Binding Notebooks}"
                   SelectedItem="{Binding SelectedNotebook, Mode=TwoWay}"
-                  />
+                  >
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <ListView Width="140"
                   DockPanel.Dock="Left"
-                  ItemsSource="{Binding Notes}"/>
+                  ItemsSource="{Binding Notes}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <ToolBar DockPanel.Dock="Top">
-            <Button>Speech</Button>
+            <Button x:Name="btnSpeechRecognition" Click="btnSpeechRecognition_Click">Speech</Button>
+            <Button FontWeight="Bold" x:Name="btnBold" Click="btnBold_Click">B</Button>
         </ToolBar>
 
         <Grid>
-            
+            <RichTextBox x:Name="tbRichtTextBox" TextChanged="tbRichtTextBox_TextChanged" />
         </Grid>
 
     </DockPanel>

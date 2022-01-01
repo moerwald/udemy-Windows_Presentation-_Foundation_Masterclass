@@ -20,6 +20,5 @@ namespace EvernoteClone.Model
         public DateTime UpdatedAt { get; set; }
         public string FileLocation { get; set; }
 
-        public override string ToString() => Title;
     }
 }
