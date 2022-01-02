@@ -66,23 +66,17 @@ namespace EvernoteClone.ViewModels.Helpers
             new FrameworkPropertyMetadata()
             {
                 BindsTwoWayByDefault = true,
-                PropertyChangedCallback = (obj, e) =>
-                {
-                }
+                PropertyChangedCallback = (obj, e) =>{ }
             }
             );
 
 
-        public static TextRange GetTextSelection(DependencyObject obj)
-        {
-            return (TextRange)obj.GetValue(TextSelectionProperty);
-        }
+        public static TextRange GetTextSelection(DependencyObject obj) 
+            => (TextRange)obj.GetValue(TextSelectionProperty);
 
 
-        public static void SetTextSelection(DependencyObject obj, TextRange value)
-        {
-            obj.SetValue(TextSelectionProperty, value);
-        }
+        public static void SetTextSelection(DependencyObject obj, TextRange value) 
+            => obj.SetValue(TextSelectionProperty, value);
 
 
     }

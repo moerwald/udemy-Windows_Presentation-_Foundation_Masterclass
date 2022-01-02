@@ -58,7 +58,11 @@
 
         <ToolBar DockPanel.Dock="Top">
             <Button x:Name="btnSpeechRecognition" Click="btnSpeechRecognition_Click">Speech</Button>
-            <ToggleButton x:Name="btnBold" Click="btnBold_Click">
+            <ToggleButton x:Name="btnBold" 
+                          IsChecked="{Binding TextIsBold}"
+                          Command="{Binding TextBoldCommand}" 
+                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" 
+                          DataContext="{StaticResource vmRTB}">
                 <TextBlock FontWeight="Bold"> B</TextBlock>
             </ToggleButton>
         </ToolBar>

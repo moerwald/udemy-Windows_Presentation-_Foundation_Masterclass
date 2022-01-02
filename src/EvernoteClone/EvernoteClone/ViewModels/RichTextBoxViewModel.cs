@@ -15,6 +15,7 @@ namespace EvernoteClone.ViewModels
     {
         private FlowDocument _text;
         private TextSelection _textSelection;
+        private bool _textIsBold;
 
         public RichTextBoxViewModel()
         {
@@ -22,8 +23,8 @@ namespace EvernoteClone.ViewModels
             // ViewModel won't work
             Text = new FlowDocument();
 
-            TextChangedCommand = new TextChangedCommand(this);
-            
+            TextBoldCommand = new MakeTextBoldCommand(this);
+
         }
 
         public FlowDocument Text
@@ -45,11 +46,23 @@ namespace EvernoteClone.ViewModels
             {
                 _textSelection = value;
 
+                TextIsBold = (FontWeight)_textSelection.GetPropertyValue(TextElement.FontWeightProperty) == FontWeights.Bold;
+
                 OnPropertyChanged(nameof(SelectedText));
             }
         }
 
-        public TextChangedCommand TextChangedCommand { get; }
+        public bool TextIsBold
+        {
+            get => _textIsBold;
+            set
+            {
+                _textIsBold = value;
+                OnPropertyChanged(nameof(TextIsBold));
+            }
+        }
+
+        public MakeTextBoldCommand TextBoldCommand { get; }
 
 
         public event PropertyChangedEventHandler? PropertyChanged;
