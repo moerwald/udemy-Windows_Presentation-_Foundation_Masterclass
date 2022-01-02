@@ -61,9 +61,16 @@
             <ToggleButton x:Name="btnBold" 
                           IsChecked="{Binding TextIsBold}"
                           Command="{Binding TextBoldCommand}" 
-                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" 
+                          CommandParameter="{Binding ElementName=btnBold, Path=IsChecked}" 
                           DataContext="{StaticResource vmRTB}">
                 <TextBlock FontWeight="Bold"> B</TextBlock>
+            </ToggleButton>
+            <ToggleButton x:Name="btnItalic" 
+                          IsChecked="{Binding TextIsItalic}"
+                          Command="{Binding TextItalicCommand}" 
+                          CommandParameter="{Binding ElementName=btnItalic, Path=IsChecked}" 
+                          DataContext="{StaticResource vmRTB}">
+                <TextBlock FontStyle="Italic">I</TextBlock>
             </ToggleButton>
         </ToolBar>
 

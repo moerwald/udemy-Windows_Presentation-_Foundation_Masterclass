@@ -16,6 +16,7 @@ namespace EvernoteClone.ViewModels
         private FlowDocument _text;
         private TextSelection _textSelection;
         private bool _textIsBold;
+        private bool _textIsItalic;
 
         public RichTextBoxViewModel()
         {
@@ -24,6 +25,7 @@ namespace EvernoteClone.ViewModels
             Text = new FlowDocument();
 
             TextBoldCommand = new MakeTextBoldCommand(this);
+            TextItalicCommand = new TextItalicCommand(this);
 
         }
 
@@ -47,6 +49,7 @@ namespace EvernoteClone.ViewModels
                 _textSelection = value;
 
                 TextIsBold = (FontWeight)_textSelection.GetPropertyValue(TextElement.FontWeightProperty) == FontWeights.Bold;
+                TextIsItalic = (FontStyle)_textSelection.GetPropertyValue(TextElement.FontStyleProperty) == FontStyles.Italic;
 
                 OnPropertyChanged(nameof(SelectedText));
             }
@@ -62,8 +65,19 @@ namespace EvernoteClone.ViewModels
             }
         }
 
-        public MakeTextBoldCommand TextBoldCommand { get; }
+        public bool TextIsItalic
+        {
+            get => _textIsItalic; 
+            set
+            {
+                _textIsItalic = value;
+                OnPropertyChanged(nameof(TextIsItalic));
+            }
+        }
 
+
+        public MakeTextBoldCommand TextBoldCommand { get; }
+        public TextItalicCommand TextItalicCommand { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string propName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
