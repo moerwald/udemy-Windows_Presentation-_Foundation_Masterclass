@@ -71,15 +71,6 @@ namespace EvernoteClone.ViewModels
             }
         }
 
-        private string _richtTextBoxText;
-
-        public string RichTextBoxText
-        {
-            get { return _richtTextBoxText; }
-            set { _richtTextBoxText = value; }
-        }
-
-
 
         public ObservableCollection<Notebook> Notebooks { get; init; }
         public ObservableCollection<Note> Notes { get; init; }

@@ -8,7 +8,6 @@ using System.Windows.Input;
 namespace EvernoteClone.ViewModels.Commands
 {
 
-
     public class NewNotebookCommand : BaseCommand
     {
         public NewNotebookCommand(NotesViewModel notesViewModel) => NotesViewModel = notesViewModel;

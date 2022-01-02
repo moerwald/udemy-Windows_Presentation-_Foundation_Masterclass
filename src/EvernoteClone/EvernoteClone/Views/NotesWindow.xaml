@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EvernoteClone.Views"
-
         xmlns:vm="clr-namespace:EvernoteClone.ViewModels"
+        xmlns:vmHelpers="clr-namespace:EvernoteClone.ViewModels.Helpers"
         mc:Ignorable="d"
         ResizeMode="CanResizeWithGrip"
         Title="NotesWindow" Height="450" Width="800">
@@ -13,6 +13,7 @@
 
     <Window.Resources>
         <vm:NotesViewModel x:Key="vm"/>
+        <vm:RichTextBoxViewModel x:Key="vmRTB"/>
     </Window.Resources>
 
     <DockPanel DataContext="{StaticResource vm}">
@@ -62,10 +63,10 @@
             </ToggleButton>
         </ToolBar>
 
-        <Grid>
-            <RichTextBox x:Name="tbRichtTextBox" 
-                         TextChanged="tbRichtTextBox_TextChanged" 
-                         SelectionChanged="tbRichtTextBox_SelectionChanged" />
+        <Grid DataContext="{StaticResource vmRTB}">
+            <RichTextBox x:Name="tbRichtTextBox"  
+                         vmHelpers:RichtTextBoxHelper.TextSelection="{Binding SelectedText, Mode=TwoWay}"
+                         vmHelpers:RichtTextBoxHelper.DocumentXaml="{Binding Text, Mode=TwoWay}"/>
         </Grid>
 
     </DockPanel>
