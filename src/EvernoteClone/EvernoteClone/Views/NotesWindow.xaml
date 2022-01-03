@@ -72,6 +72,13 @@
                           DataContext="{StaticResource vmRTB}">
                 <TextBlock FontStyle="Italic">I</TextBlock>
             </ToggleButton>
+            <ToggleButton x:Name="btnUnderline" 
+                          IsChecked="{Binding TextIsUnderlined}"
+                          Command="{Binding TextUnderlineCommand}" 
+                          CommandParameter="{Binding ElementName=btnUnderline, Path=IsChecked}" 
+                          DataContext="{StaticResource vmRTB}">
+                <TextBlock TextDecorations="Underline">U</TextBlock>
+            </ToggleButton>
         </ToolBar>
 
         <Grid DataContext="{StaticResource vmRTB}">

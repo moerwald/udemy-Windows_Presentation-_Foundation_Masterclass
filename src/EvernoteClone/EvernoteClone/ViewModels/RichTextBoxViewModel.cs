@@ -17,6 +17,7 @@ namespace EvernoteClone.ViewModels
         private TextSelection _textSelection;
         private bool _textIsBold;
         private bool _textIsItalic;
+        private bool textIsUnderlined;
 
         public RichTextBoxViewModel()
         {
@@ -26,6 +27,7 @@ namespace EvernoteClone.ViewModels
 
             TextBoldCommand = new MakeTextBoldCommand(this);
             TextItalicCommand = new TextItalicCommand(this);
+            TextUnderlineCommand = new TextUnderlineCommand(this);
 
         }
 
@@ -48,8 +50,9 @@ namespace EvernoteClone.ViewModels
             {
                 _textSelection = value;
 
-                TextIsBold = (FontWeight)_textSelection.GetPropertyValue(TextElement.FontWeightProperty) == FontWeights.Bold;
-                TextIsItalic = (FontStyle)_textSelection.GetPropertyValue(TextElement.FontStyleProperty) == FontStyles.Italic;
+                TextIsBold = (FontWeight)_textSelection.GetPropertyValue(Inline.FontWeightProperty) == FontWeights.Bold;
+                TextIsItalic = (FontStyle)_textSelection.GetPropertyValue(Inline.FontStyleProperty) == FontStyles.Italic;
+                TextIsUnderlined = (TextDecorationCollection)_textSelection.GetPropertyValue(Inline.TextDecorationsProperty) == TextDecorations.Underline;
 
                 OnPropertyChanged(nameof(SelectedText));
             }
@@ -67,7 +70,7 @@ namespace EvernoteClone.ViewModels
 
         public bool TextIsItalic
         {
-            get => _textIsItalic; 
+            get => _textIsItalic;
             set
             {
                 _textIsItalic = value;
@@ -75,9 +78,18 @@ namespace EvernoteClone.ViewModels
             }
         }
 
+        public bool TextIsUnderlined
+        {
+            get => textIsUnderlined; set
+            {
+                textIsUnderlined = value;
+                OnPropertyChanged(nameof(TextIsUnderlined));
+            }
+        }
 
         public MakeTextBoldCommand TextBoldCommand { get; }
         public TextItalicCommand TextItalicCommand { get; }
+        public TextUnderlineCommand TextUnderlineCommand { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string propName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
