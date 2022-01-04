@@ -80,10 +80,12 @@
                 <TextBlock TextDecorations="Underline">U</TextBlock>
             </ToggleButton>
             <ComboBox x:Name="cbFontFamily" 
+                      DataContext="{StaticResource vmRTB}"
                       ItemsSource="{Binding FontFamilies}"
                       SelectedItem="{Binding SelectedFontFamily}"
                       Width="180"/>
             <ComboBox x:Name="cbFontSize" 
+                      DataContext="{StaticResource vmRTB}"
                       ItemsSource="{Binding FontSizes}"
                       SelectedItem="{Binding SelectedFontSize}"
                       IsEditable="True"

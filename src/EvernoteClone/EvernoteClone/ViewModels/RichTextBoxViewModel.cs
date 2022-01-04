@@ -1,6 +1,7 @@
 ﻿using EvernoteClone.ViewModels.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace EvernoteClone.ViewModels
 {
@@ -18,12 +20,17 @@ namespace EvernoteClone.ViewModels
         private bool _textIsBold;
         private bool _textIsItalic;
         private bool textIsUnderlined;
+        private FontFamily selectedFontFamily;
+        private double _selectedFontSize;
 
         public RichTextBoxViewModel()
         {
             // Indirectly trigger RichtTextBoxHelper PropertyChanged event, don't remove this code, otherwise Binding between RichTextBox and this
             // ViewModel won't work
             Text = new FlowDocument();
+
+            FontFamilies = new ObservableCollection<FontFamily>(Fonts.SystemFontFamilies.OrderBy(f => f.Source));
+            FontSizes = new ObservableCollection<double>(new List<double> { 8, 9, 11, 13, 14, 16, 20, 24, 32, 48, 72 });
 
             TextBoldCommand = new MakeTextBoldCommand(this);
             TextItalicCommand = new TextItalicCommand(this);
@@ -87,12 +94,35 @@ namespace EvernoteClone.ViewModels
             }
         }
 
+
+        public ObservableCollection<FontFamily> FontFamilies { get; init; }
+
+        public ObservableCollection<double> FontSizes { get; init; }
+
+        public FontFamily SelectedFontFamily
+        {
+            get => selectedFontFamily; set
+            {
+                selectedFontFamily = value;
+                OnPropertyChanged();
+            }
+        }
+        public double SelectedFontSize
+        {
+            get => _selectedFontSize; set
+            {
+                _selectedFontSize = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MakeTextBoldCommand TextBoldCommand { get; }
         public TextItalicCommand TextItalicCommand { get; }
         public TextUnderlineCommand TextUnderlineCommand { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged(string propName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
 
+        private void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propName = "")
+          => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
 }

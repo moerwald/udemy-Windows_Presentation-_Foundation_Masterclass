@@ -23,9 +23,6 @@ namespace EvernoteClone.ViewModels
             GetNotebooks();
 
             Notes = new ObservableCollection<Note>();
-            FontFamilies = new ObservableCollection<FontFamily>(Fonts.SystemFontFamilies.OrderBy(f => f.Source));
-            SelectedFontFamily = Fonts.SystemFontFamilies.First();
-            FontSizes = new ObservableCollection<double>(new List<double> { 8, 9, 11, 13, 14, 16, 20, 24, 32, 48, 72 });
             GetNotes();
         }
 
@@ -64,8 +61,6 @@ namespace EvernoteClone.ViewModels
 
 
         private string _statusBarMessage;
-        private FontFamily selectedFontFamily;
-        private double _selectedFontSize;
 
         public string StatusBarMessage
         {
@@ -82,26 +77,6 @@ namespace EvernoteClone.ViewModels
 
         public ObservableCollection<Note> Notes { get; init; }
 
-        public ObservableCollection<FontFamily> FontFamilies { get; init; }
-
-        public ObservableCollection<double> FontSizes { get; init; }
-
-        public FontFamily SelectedFontFamily
-        {
-            get => selectedFontFamily; set
-            {
-                selectedFontFamily = value;
-                OnPropertyChanged();
-            }
-        }
-        public double SelectedFontSize
-        {
-            get => _selectedFontSize; set
-            {
-                _selectedFontSize = value;
-                OnPropertyChanged();
-            }
-        }
 
         public NewNotebookCommand NewNotebookCommand { get; }
 
