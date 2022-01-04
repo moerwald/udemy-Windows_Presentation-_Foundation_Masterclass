@@ -46,12 +46,9 @@ namespace EvernoteClone.ViewModels.Helpers
 
                     rtb.TextChanged += (s, e) =>
                     {
-                        if (s is RichTextBox richTextBox2)
-                        {
-                            var textRange = new TextRange(richTextBox2.Document.ContentStart, richTextBox2.Document.ContentEnd);
-                            System.Diagnostics.Debug.WriteLine($"---- New text: {textRange.Text}");
-                            SetDocumentXaml(rtb, richTextBox2.Document);
-                        }
+                        //var textRange = new TextRange(richTextBox2.Document.ContentStart, richTextBox2.Document.ContentEnd);
+                        //System.Diagnostics.Debug.WriteLine($"---- New text: {textRange.Text}");
+                        SetDocumentXaml(rtb, rtb.Document);
                     };
 
                     rtb.SelectionChanged += (s, e) => rtb.SetValue(TextSelectionProperty, rtb.Selection);
@@ -66,16 +63,16 @@ namespace EvernoteClone.ViewModels.Helpers
             new FrameworkPropertyMetadata()
             {
                 BindsTwoWayByDefault = true,
-                PropertyChangedCallback = (obj, e) =>{ }
+                PropertyChangedCallback = (obj, e) => { }
             }
             );
 
 
-        public static TextRange GetTextSelection(DependencyObject obj) 
+        public static TextRange GetTextSelection(DependencyObject obj)
             => (TextRange)obj.GetValue(TextSelectionProperty);
 
 
-        public static void SetTextSelection(DependencyObject obj, TextRange value) 
+        public static void SetTextSelection(DependencyObject obj, TextRange value)
             => obj.SetValue(TextSelectionProperty, value);
 
 

@@ -35,6 +35,7 @@ namespace EvernoteClone.ViewModels
             TextBoldCommand = new MakeTextBoldCommand(this);
             TextItalicCommand = new TextItalicCommand(this);
             TextUnderlineCommand = new TextUnderlineCommand(this);
+            ChangeFontFamilyCommand = new ChangeFontFamilyCommand(this);
 
         }
 
@@ -60,6 +61,8 @@ namespace EvernoteClone.ViewModels
                 TextIsBold = (FontWeight)_textSelection.GetPropertyValue(Inline.FontWeightProperty) == FontWeights.Bold;
                 TextIsItalic = (FontStyle)_textSelection.GetPropertyValue(Inline.FontStyleProperty) == FontStyles.Italic;
                 TextIsUnderlined = (TextDecorationCollection)_textSelection.GetPropertyValue(Inline.TextDecorationsProperty) == TextDecorations.Underline;
+                SelectedFontFamily = (FontFamily)_textSelection.GetPropertyValue(Inline.FontFamilyProperty);
+                SelectedFontSize = (double)_textSelection.GetPropertyValue(Inline.FontSizeProperty);
 
                 OnPropertyChanged(nameof(SelectedText));
             }
@@ -105,20 +108,34 @@ namespace EvernoteClone.ViewModels
             {
                 selectedFontFamily = value;
                 OnPropertyChanged();
+
+                var cmd = new ChangeFontFamilyCommand(this);
+                if (cmd.CanExecute(null))
+                {
+                    cmd.Execute(null);
+                }
             }
         }
+
         public double SelectedFontSize
         {
             get => _selectedFontSize; set
             {
                 _selectedFontSize = value;
                 OnPropertyChanged();
+
+                var cmd = new ChangeFontSizeCommand(this);
+                if (cmd.CanExecute(null))
+                {
+                    cmd.Execute(null);
+                }
             }
         }
 
         public MakeTextBoldCommand TextBoldCommand { get; }
         public TextItalicCommand TextItalicCommand { get; }
         public TextUnderlineCommand TextUnderlineCommand { get; }
+        public ChangeFontFamilyCommand ChangeFontFamilyCommand { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
