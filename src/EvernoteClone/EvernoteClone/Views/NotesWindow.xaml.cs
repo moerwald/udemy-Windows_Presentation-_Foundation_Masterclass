@@ -62,22 +62,6 @@ namespace EvernoteClone.Views
             Application.Current.Shutdown();
         }
 
-        private void tbRichtTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var tr = new TextRange(tbRichtTextBox.Document.ContentStart, tbRichtTextBox.Document.ContentEnd);
-            tbStatusBar.Text = $"Document length: {tr.Text.Length}";
-        }
-
-        private void btnBold_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is not ToggleButton btnBold)
-                return;
-
-            tbRichtTextBox.Selection.ApplyPropertyValue(
-                TextElement.FontWeightProperty,
-                btnBold.IsChecked ?? false ? FontWeights.Bold : FontWeights.Normal);
-        }
-
         private void btnSpeechRecognition_Click(object sender, RoutedEventArgs e)
         {
             if (!_isRecognizing)
@@ -89,14 +73,6 @@ namespace EvernoteClone.Views
             {
                 _recognizer?.RecognizeAsyncStop();
                 _isRecognizing = false;
-            }
-        }
-
-        private void tbRichtTextBox_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            if (tbRichtTextBox.Selection.GetPropertyValue(Inline.FontWeightProperty) is FontWeight fw)
-            {
-                btnBold.IsChecked = fw == FontWeights.Bold;
             }
         }
     }
