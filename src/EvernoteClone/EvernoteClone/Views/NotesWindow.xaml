@@ -79,6 +79,15 @@
                           DataContext="{StaticResource vmRTB}">
                 <TextBlock TextDecorations="Underline">U</TextBlock>
             </ToggleButton>
+            <ComboBox x:Name="cbFontFamily" 
+                      ItemsSource="{Binding FontFamilies}"
+                      SelectedItem="{Binding SelectedFontFamily}"
+                      Width="180"/>
+            <ComboBox x:Name="cbFontSize" 
+                      ItemsSource="{Binding FontSizes}"
+                      SelectedItem="{Binding SelectedFontSize}"
+                      IsEditable="True"
+                      Width="40"/>
         </ToolBar>
 
         <Grid DataContext="{StaticResource vmRTB}">

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace EvernoteClone.ViewModels
 {
@@ -22,6 +23,9 @@ namespace EvernoteClone.ViewModels
             GetNotebooks();
 
             Notes = new ObservableCollection<Note>();
+            FontFamilies = new ObservableCollection<FontFamily>(Fonts.SystemFontFamilies.OrderBy(f => f.Source));
+            SelectedFontFamily = Fonts.SystemFontFamilies.First();
+            FontSizes = new ObservableCollection<double>(new List<double> { 8, 9, 11, 13, 14, 16, 20, 24, 32, 48, 72 });
             GetNotes();
         }
 
@@ -54,26 +58,50 @@ namespace EvernoteClone.ViewModels
             {
                 _selectedNotebook = value;
                 GetNotes();
-                OnPropertyChanged(nameof(SelectedNotebook));
+                OnPropertyChanged();
             }
         }
 
 
         private string _statusBarMessage;
+        private FontFamily selectedFontFamily;
+        private double _selectedFontSize;
 
         public string StatusBarMessage
         {
-            get { return _statusBarMessage; } 
-            set 
-            { 
-                _statusBarMessage = value; 
-                OnPropertyChanged(nameof(StatusBarMessage));
+            get { return _statusBarMessage; }
+            set
+            {
+                _statusBarMessage = value;
+                OnPropertyChanged();
             }
         }
 
 
         public ObservableCollection<Notebook> Notebooks { get; init; }
+
         public ObservableCollection<Note> Notes { get; init; }
+
+        public ObservableCollection<FontFamily> FontFamilies { get; init; }
+
+        public ObservableCollection<double> FontSizes { get; init; }
+
+        public FontFamily SelectedFontFamily
+        {
+            get => selectedFontFamily; set
+            {
+                selectedFontFamily = value;
+                OnPropertyChanged();
+            }
+        }
+        public double SelectedFontSize
+        {
+            get => _selectedFontSize; set
+            {
+                _selectedFontSize = value;
+                OnPropertyChanged();
+            }
+        }
 
         public NewNotebookCommand NewNotebookCommand { get; }
 
@@ -88,10 +116,10 @@ namespace EvernoteClone.ViewModels
         public void NewNote(Notebook notebook)
         {
             DatabaseHelper.Insert(
-                new Note() 
-                { 
+                new Note()
+                {
                     Title = $"Note for {DateTime.Now}",
-                    NotebookId = notebook.Id ,
+                    NotebookId = notebook.Id,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                 });
@@ -99,7 +127,8 @@ namespace EvernoteClone.ViewModels
             GetNotes();
         }
 
-        private void OnPropertyChanged(string propName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        private void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propName = "") 
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
 
     }
 }
