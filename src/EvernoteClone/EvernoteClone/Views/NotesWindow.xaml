@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:EvernoteClone.Views"
         xmlns:vm="clr-namespace:EvernoteClone.ViewModels"
         xmlns:vmHelpers="clr-namespace:EvernoteClone.ViewModels.Helpers"
+        xmlns:uc="clr-namespace:EvernoteClone.Views.CustomControls"
         mc:Ignorable="d"
         ResizeMode="CanResizeWithGrip"
         Title="NotesWindow" Height="450" Width="800">
@@ -37,11 +38,12 @@
                   DockPanel.Dock="Left"
                   ItemsSource="{Binding Notebooks}"
                   SelectedItem="{Binding SelectedNotebook, Mode=TwoWay}"
+                  Background="Black"
                   >
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
+                    <uc:DisplayNotebooks Notebook="{Binding}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
