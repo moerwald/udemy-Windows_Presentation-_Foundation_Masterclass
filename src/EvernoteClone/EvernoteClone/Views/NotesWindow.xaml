@@ -43,7 +43,7 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <uc:DisplayNotebooks Notebook="{Binding}"/>
+                    <uc:DisplayNotebooks Notebook="{Binding }"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -53,7 +53,7 @@
                   ItemsSource="{Binding Notes}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Title}"/>
+                    <uc:DisplayNote Note="{Binding}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
