@@ -118,6 +118,8 @@ namespace EvernoteClone.ViewModels
             GetNotes();
         }
 
+        public void RenameStart() => RenameIsVisible = Visibility.Visible;
+
         public void RenameFinished(Notebook notebook)
         {
             RenameIsVisible = Visibility.Collapsed;

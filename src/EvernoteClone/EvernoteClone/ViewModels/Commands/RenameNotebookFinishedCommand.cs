@@ -6,7 +6,7 @@ namespace EvernoteClone.ViewModels.Commands
     {
         private readonly NotesViewModel _notesViewModel;
 
-        public RenameNotebookFinishedCommand(NotesViewModel notesViewModel) 
+        public RenameNotebookFinishedCommand(NotesViewModel notesViewModel)
             => _notesViewModel = notesViewModel;
 
         public override bool CanExecute(object? parameter) => true;
