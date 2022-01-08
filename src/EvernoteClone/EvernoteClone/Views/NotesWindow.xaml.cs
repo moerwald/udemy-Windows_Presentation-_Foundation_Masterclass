@@ -75,5 +75,6 @@ namespace EvernoteClone.Views
                 _isRecognizing = false;
             }
         }
+
     }
 }

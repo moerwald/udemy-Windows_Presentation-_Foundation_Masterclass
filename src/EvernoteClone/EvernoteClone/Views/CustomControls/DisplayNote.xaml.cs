@@ -21,8 +21,6 @@ namespace EvernoteClone.Views.CustomControls
     /// </summary>
     public partial class DisplayNote : UserControl
     {
-
-
         public Note Note
         {
             get { return (Note)GetValue(NoteProperty); }

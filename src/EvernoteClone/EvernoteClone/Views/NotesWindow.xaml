@@ -1,6 +1,7 @@
 ﻿<Window x:Class="EvernoteClone.Views.NotesWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EvernoteClone.Views"
@@ -40,12 +41,29 @@
                   SelectedItem="{Binding SelectedNotebook, Mode=TwoWay}"
                   Background="Black"
                   >
-
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <uc:DisplayNotebooks Notebook="{Binding }"/>
+                    <StackPanel>
+                        <uc:DisplayNotebooks Notebook="{Binding}">
+                            <uc:DisplayNotebooks.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Rename" Command="{Binding RenameNotebookCommand , Source={StaticResource vm}}"  />
+                                </ContextMenu>
+                            </uc:DisplayNotebooks.ContextMenu>
+                        </uc:DisplayNotebooks>
+                        <TextBox Visibility="{Binding RenameIsVisible , Source={StaticResource vm}}" Text="{Binding Name}" x:Name="tbRename" >
+                            <behavior:Interaction.Triggers>
+                                <behavior:EventTrigger EventName="LostFocus" SourceObject="{Binding ElementName=tbRename}"  >
+                                    <behavior:InvokeCommandAction 
+                                        Command="{Binding Source={StaticResource vm}, Path=RenameNotebookFinishedCommand}"
+                                        CommandParameter="{Binding}"/>
+                                </behavior:EventTrigger>
+                            </behavior:Interaction.Triggers>
+                        </TextBox>
+                    </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
+
         </ListView>
 
         <ListView Width="140"

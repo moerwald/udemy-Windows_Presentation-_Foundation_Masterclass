@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace EvernoteClone.ViewModels
@@ -18,6 +19,8 @@ namespace EvernoteClone.ViewModels
         {
             NewNotebookCommand = new NewNotebookCommand(this);
             NewNoteCommand = new NewNoteCommand(this);
+            RenameNotebookCommand = new RenameNotebookCommand(this);
+            RenameNotebookFinishedCommand = new RenameNotebookFinishedCommand(this);
 
             Notebooks = new ObservableCollection<Notebook>();
             GetNotebooks();
@@ -61,6 +64,7 @@ namespace EvernoteClone.ViewModels
 
 
         private string _statusBarMessage;
+        private Visibility renameIsVisible = Visibility.Collapsed;
 
         public string StatusBarMessage
         {
@@ -81,6 +85,18 @@ namespace EvernoteClone.ViewModels
         public NewNotebookCommand NewNotebookCommand { get; }
 
         public NewNoteCommand NewNoteCommand { get; }
+        public RenameNotebookCommand RenameNotebookCommand { get; }
+        public RenameNotebookFinishedCommand RenameNotebookFinishedCommand { get; }
+
+        public Visibility RenameIsVisible
+        {
+            get => renameIsVisible; 
+            set
+            {
+                renameIsVisible = value;
+                OnPropertyChanged();
+            }
+        }
 
         public void NewNotebook()
         {
@@ -102,7 +118,15 @@ namespace EvernoteClone.ViewModels
             GetNotes();
         }
 
-        private void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propName = "") 
+        public void RenameFinished(Notebook notebook)
+        {
+            RenameIsVisible = Visibility.Collapsed;
+            DatabaseHelper.Update(notebook);
+            GetNotes();
+
+        }
+
+        private void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propName = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
 
     }
