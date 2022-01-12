@@ -67,8 +67,18 @@
         </ListView>
 
         <ListView Width="140"
+                  x:Name="lvNotes"
                   DockPanel.Dock="Left"
-                  ItemsSource="{Binding Notes}">
+                  ItemsSource="{Binding Notes}"
+                  SelectedItem="{Binding Source={StaticResource vmRTB}, Path=SelectedNote}"
+                  >
+                            <behavior:Interaction.Triggers>
+                                <behavior:EventTrigger EventName="SelectionChanged" SourceObject="{Binding ElementName=lvNotes}"  >
+                                    <behavior:InvokeCommandAction 
+                                        Command="{Binding Source={StaticResource vmRTB}, Path=LoadCommand}"
+                                        CommandParameter="{Binding ElementName=lvNotes, Path=SelectedItem}"/>
+                                </behavior:EventTrigger>
+                            </behavior:Interaction.Triggers>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <uc:DisplayNote Note="{Binding}"/>
@@ -110,6 +120,10 @@
                       SelectedItem="{Binding SelectedFontSize}"
                       IsEditable="True"
                       Width="40"/>
+            <Button x:Name="btnSave"
+                    DataContext="{StaticResource vmRTB}"
+                    Command="{Binding SaveCommand}"
+                    CommandParameter="{Binding SelectedNote}">Save</Button>
         </ToolBar>
 
         <Grid DataContext="{StaticResource vmRTB}">

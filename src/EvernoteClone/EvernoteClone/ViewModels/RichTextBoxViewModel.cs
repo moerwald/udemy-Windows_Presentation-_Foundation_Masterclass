@@ -1,4 +1,5 @@
-﻿using EvernoteClone.ViewModels.Commands;
+﻿using EvernoteClone.Model;
+using EvernoteClone.ViewModels.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -36,7 +37,8 @@ namespace EvernoteClone.ViewModels
             TextItalicCommand = new TextItalicCommand(this);
             TextUnderlineCommand = new TextUnderlineCommand(this);
             ChangeFontFamilyCommand = new ChangeFontFamilyCommand(this);
-
+            SaveCommand = new SaveCommand(this);
+            LoadCommand = new LoadCommand(this);
         }
 
         public FlowDocument Text
@@ -132,10 +134,24 @@ namespace EvernoteClone.ViewModels
             }
         }
 
+        private Note _selectedNote;
+
+        public Note SelectedNote
+        {
+            get { return _selectedNote; }
+            set
+            {
+                _selectedNote = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MakeTextBoldCommand TextBoldCommand { get; }
         public TextItalicCommand TextItalicCommand { get; }
         public TextUnderlineCommand TextUnderlineCommand { get; }
         public ChangeFontFamilyCommand ChangeFontFamilyCommand { get; }
+        public SaveCommand SaveCommand { get; }
+        public LoadCommand LoadCommand { get; private set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

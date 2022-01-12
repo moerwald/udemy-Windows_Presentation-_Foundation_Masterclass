@@ -77,6 +77,7 @@ namespace EvernoteClone.ViewModels
         }
 
 
+
         public ObservableCollection<Notebook> Notebooks { get; init; }
 
         public ObservableCollection<Note> Notes { get; init; }
@@ -90,7 +91,7 @@ namespace EvernoteClone.ViewModels
 
         public Visibility RenameIsVisible
         {
-            get => renameIsVisible; 
+            get => renameIsVisible;
             set
             {
                 renameIsVisible = value;
