@@ -4,9 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EvernoteClone.Views"
+        xmlns:vm="clr-namespace:EvernoteClone.ViewModels"
+        xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
+        Title="LoginWindow" Height="450" Width="800"
+        Closing="Window_Closing">
+    <Window.Resources>
+        <vm:LoginViewModel x:Key="vm"/>
+    </Window.Resources>
+
     <Grid>
-        
+        <StackPanel DataContext="{StaticResource vm}">
+            <StackPanel Margin="5" Visibility="{Binding LoginVisible }">
+                <TextBlock Foreground="DodgerBlue" TextDecorations="Underline" x:Name="tbLogin">
+                    <TextBlock.Text>Login</TextBlock.Text>
+                    <behavior:Interaction.Triggers>
+                        <behavior:EventTrigger EventName="MouseLeftButtonDown" >
+                            <behavior:InvokeCommandAction Command="{Binding SwitchLoginRegisterCommand}"/>
+                        </behavior:EventTrigger>
+                    </behavior:Interaction.Triggers>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Margin="5" Visibility="{Binding RegisterVisible}">
+                <TextBlock Foreground="DodgerBlue" TextDecorations="Underline" x:Name="tbRegister">
+                    <TextBlock.Text>Register</TextBlock.Text>
+                    <behavior:Interaction.Triggers>
+                        <behavior:EventTrigger EventName="MouseLeftButtonDown" >
+                            <behavior:InvokeCommandAction Command="{Binding SwitchLoginRegisterCommand}"/>
+                        </behavior:EventTrigger>
+                    </behavior:Interaction.Triggers>
+                </TextBlock>
+            </StackPanel>
+        </StackPanel>
+
     </Grid>
 </Window>

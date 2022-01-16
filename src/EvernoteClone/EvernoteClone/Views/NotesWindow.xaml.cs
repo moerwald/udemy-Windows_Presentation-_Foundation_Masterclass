@@ -57,6 +57,15 @@ namespace EvernoteClone.Views
             }
         }
 
+        protected override void OnActivated(EventArgs e)
+        {
+            if (string.IsNullOrEmpty( App.UserId ))
+            {
+                var loginWindow = new LoginWindow();
+                loginWindow.ShowDialog();
+            }
+        }
+
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
