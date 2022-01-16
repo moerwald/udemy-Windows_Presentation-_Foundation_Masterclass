@@ -59,6 +59,7 @@ namespace EvernoteClone.Views
 
         protected override void OnActivated(EventArgs e)
         {
+            base.OnActivated(e);
             if (string.IsNullOrEmpty( App.UserId ))
             {
                 var loginWindow = new LoginWindow();

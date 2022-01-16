@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EvernoteClone.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows.Input;
 
 namespace EvernoteClone.ViewModels.Commands
 {
-    public class LoginCommand : ICommand
+    public class LoginCommand : BaseCommand
     {
         public LoginCommand(LoginViewModel loginViewModel)
         {
@@ -16,14 +17,27 @@ namespace EvernoteClone.ViewModels.Commands
 
         public LoginViewModel LoginViewModel { get; }
 
-        public event EventHandler? CanExecuteChanged;
-
-        public bool CanExecute(object? parameter)
+        public override bool CanExecute(object? parameter)
         {
+            if (parameter is not User user)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(user.Username))
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(user.Password))
+            {
+                return false;
+            }
+
             return true;
         }
 
-        public void Execute(object? parameter)
+        public override void Execute(object? parameter)
         {
         }
     }

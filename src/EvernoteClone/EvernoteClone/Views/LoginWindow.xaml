@@ -16,8 +16,16 @@
     <Grid>
         <StackPanel DataContext="{StaticResource vm}">
             <StackPanel Margin="5" Visibility="{Binding LoginVisible }">
+                <TextBlock>Username:</TextBlock>
+                <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock>Password:</TextBlock>
+                <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Command="{Binding LoginCommand}" 
+                        CommandParameter="{Binding User}"
+                        Margin="0,5"
+                        >Login</Button>
                 <TextBlock Foreground="DodgerBlue" TextDecorations="Underline" x:Name="tbLogin">
-                    <TextBlock.Text>Login</TextBlock.Text>
+                    <TextBlock.Text>Register</TextBlock.Text>
                     <behavior:Interaction.Triggers>
                         <behavior:EventTrigger EventName="MouseLeftButtonDown" >
                             <behavior:InvokeCommandAction Command="{Binding SwitchLoginRegisterCommand}"/>
@@ -26,8 +34,24 @@
                 </TextBlock>
             </StackPanel>
             <StackPanel Margin="5" Visibility="{Binding RegisterVisible}">
+
+                <TextBlock>Name:</TextBlock>
+                <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock>Last name:</TextBlock>
+                <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock>Username:</TextBlock>
+                <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock>Password:</TextBlock>
+                <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock>Confirm password:</TextBlock>
+                <TextBox Text="{Binding ConfirmedPassword, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Command="{Binding RegisterCommand}" 
+                        CommandParameter="{Binding User}"
+                        Margin="0,5"
+                        >Register</Button>
+
                 <TextBlock Foreground="DodgerBlue" TextDecorations="Underline" x:Name="tbRegister">
-                    <TextBlock.Text>Register</TextBlock.Text>
+                    <TextBlock.Text>Login</TextBlock.Text>
                     <behavior:Interaction.Triggers>
                         <behavior:EventTrigger EventName="MouseLeftButtonDown" >
                             <behavior:InvokeCommandAction Command="{Binding SwitchLoginRegisterCommand}"/>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EvernoteClone.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,23 +8,23 @@ using System.Windows.Input;
 
 namespace EvernoteClone.ViewModels.Commands
 {
-    public class RegisterCommand : ICommand
+    public class RegisterCommand : BaseCommand
     {
-        public RegisterCommand(LoginViewModel loginViewModel)
-        {
-            LoginViewModel = loginViewModel;
-        }
+        public RegisterCommand(LoginViewModel loginViewModel) => LoginViewModel = loginViewModel;
 
         public LoginViewModel LoginViewModel { get; }
 
-        public event EventHandler? CanExecuteChanged;
-
-        public bool CanExecute(object? parameter)
+        public override bool CanExecute(object? parameter)
         {
-            return true;
+            if (parameter is not User user)
+            {
+                return false;
+            }
+
+            return !LoginViewModel.UserPropertiesForRegisterInValid();
         }
 
-        public void Execute(object? parameter)
+        public override void Execute(object? parameter)
         {
             // Todo
         }
